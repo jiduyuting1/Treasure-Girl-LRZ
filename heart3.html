@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>I LOVE YOU</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: white;
+        }
+        
+        #main-heart {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            font-size: 40vw;
+            color: pink;
+            text-shadow: 0 0 20px rgba(255, 150, 150, 0.8);
+        }
+        
+        .love-window {
+            position: absolute;
+            background-color: pink;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 150, 150, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            z-index: 2;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            animation: float 3s ease-in-out infinite;
+            cursor: default;
+            min-width: 220px; /* 确保有足够空间显示较长文本 */
+        }
+        
+        .lrz-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 8px;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        
+        /* 新增动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div id="main-heart">❤</div>
+
+    <script>
+        // 创建随机爱心窗口
+        function createLoveWindow() {
+            const win = document.createElement('div');
+            win.className = 'love-window';
+            
+            // 随机选择文本内容
+            const texts = [" 我 喜 欢 你 ！", "宝宝天下第一好！","爱躲在星星里⭐️", "爱躲在星星里❤️", "爱藏在星星里❤️"];
+            const randomText = texts[Math.floor(Math.random() * texts.length)];
+            
+            // 创建两行文本（随机文本 + LRZ）
+            win.innerHTML = `
+                <div>${randomText}</div>
+                <div class="lrz-text">❤️ LRZ ❤️</div>
+            `;
+            
+            // 随机位置
+            const width = Math.max(220, randomText.length * 15); // 根据文本长度动态调整宽度
+            const height = 110;
+            const x = Math.floor(Math.random() * (window.innerWidth - width));
+            const y = Math.floor(Math.random() * (window.innerHeight - height));
+            
+            win.style.width = `${width}px`;
+            win.style.height = `${height}px`;
+            win.style.left = `${x}px`;
+            win.style.top = `${y}px`;
+            
+            // 随机颜色变化
+            const hue = Math.floor(Math.random() * 20);
+            win.style.backgroundColor = `hsl(350, 100%, ${85 - hue}%)`;
+            
+            // 添加淡入动画
+            win.style.animation = 'fadeIn 0.5s ease-out';
+            
+            // 点击消失效果
+            win.addEventListener('click', () => {
+                win.style.opacity = '0';
+                win.style.transform = 'scale(0.8)';
+                setTimeout(() => win.remove(), 500);
+            });
+            
+            document.body.appendChild(win);
+        }
+        
+        // 初始化
+        function init() {
+            // 创建99个小窗口（带延迟效果）
+            for (let i = 0; i < 99; i++) {
+                setTimeout(() => {
+                    createLoveWindow();
+                }, i * 200);
+            }
+        }
+        
+        // 页面加载完成后启动
+        window.onload = init;
+    </script>
+</body>
+</html>
